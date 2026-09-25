@@ -1,5 +1,9 @@
 # server.py
 from http.server import BaseHTTPRequestHandler, HTTPServer
+from modules.courses import get_courses
+from modules.students import get_students
+from modules.assignments import get_assignments
+
 import json
 class SimpleHandler(BaseHTTPRequestHandler):
     def send_json(self, data, status=200):
@@ -14,10 +18,11 @@ class SimpleHandler(BaseHTTPRequestHandler):
         elif self.path == "/health":
             self.send_json({"status": "ok"})
         elif self.path == "/courses":
-            self.send_json({"courses": [
-                {"id": 1, "name": "Pemrograman Sisi Server"},
-                {"id": 2, "name": "Basis Data"}
-            ]})
+            self.send_json({"courses": get_courses()})
+        elif self.path == "/students":
+            self.send_json({"students": get_students()})
+        elif self.path == "/assignments":
+            self.send_json({"assignments": get_assignments()})
         elif self.path == "/students":
             self.send_json({"students": [
                 {"id": 1, "name": "Andi"},
